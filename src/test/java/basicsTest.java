@@ -33,14 +33,13 @@ public class basicsTest {
         page.navigate("https://eventhub.rahulshettyacademy.com/admin/events");
         page.getByLabel("Title").fill("Cargo Events");
         page.locator("//*[@id=\"admin-event-form\"]/div[1]/div[2]/textarea").fill("Cargo");
-        //page.getByLabel("Description").fill("Cargo");
         page.getByLabel("City").fill("Pune");
         page.getByLabel("Venue").fill("Orchid Hotel, Baner, Pune");
-        page.getByLabel("Event Date & Time").fill("2024-06-30 10:00");
+        page.getByLabel("Event Date & Time").fill("2026-09-11T08:30");
         page.getByLabel("Price").fill("300");
         page.getByLabel("Total Seats").fill("100");
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("+ Add Event")).click();
-
+        page.navigate("https://eventhub.rahulshettyacademy.com/events");
     }
 
 
