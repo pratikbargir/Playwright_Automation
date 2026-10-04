@@ -1,6 +1,9 @@
 import com.microsoft.playwright.*;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.nio.file.Paths;
 
 public class multiWindowHandling {
 
@@ -14,8 +17,21 @@ public class multiWindowHandling {
         playwright = Playwright.create();
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
         context = browser.newContext(); // Create a new browser context(window)like incognito window
+        context.tracing().start( new Tracing.StartOptions()
+                .setScreenshots(true)
+                .setSnapshots(true)
+                .setSources(true)); // Start tracing with screenshots, snapshots, and sources enabled
         page = context.newPage(); // Create a new page in the browser context
         page.navigate("https://rahulshettyacademy.com/loginpagePractise/");
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        context.tracing().stop(new Tracing.StopOptions()
+                .setPath(Paths.get("trace.zip"))); // Stop tracing and save the trace to a file
+        context.close(); // Close the browser context
+        browser.close(); // Close the browser
+        playwright.close(); // Close Playwright
     }
 
     @Test
@@ -35,4 +51,6 @@ public class multiWindowHandling {
         System.out.println("Extracted Email: " + ExtractedMail);
         System.out.println("Filled Email: " + filledMail);
     }
+
+
 }
