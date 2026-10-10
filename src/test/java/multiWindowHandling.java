@@ -1,4 +1,5 @@
 import com.microsoft.playwright.*;
+import com.microsoft.playwright.options.AriaRole;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -52,5 +53,17 @@ public class multiWindowHandling {
         System.out.println("Filled Email: " + filledMail);
     }
 
+    @Test(description = "Handle Radio buttons")
+    public void radioButtonHandling() {
 
+        Locator radioButton = page.getByRole(AriaRole.RADIO, new Page.GetByRoleOptions().setName("User"));
+        radioButton.click(new Locator.ClickOptions().setTimeout(5000));
+        page.locator("#okayBtn").click();
+        if (radioButton.isChecked()) {
+            System.out.println("Radio button is selected");
+        } else {
+            System.out.println("Radio button is not selected");
+
+        }
+    }
 }
